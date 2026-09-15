@@ -1,0 +1,23 @@
+{
+  "name": "session-11-doctor-module",
+  "version": "1.0.0",
+  "description": "Session 11: Doctor Entity Module for MediCare Hospital Management System using Express, MongoDB, and Mongoose",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test/doctor.test.js"
+  },
+  "keywords": [
+    "express",
+    "mongoose",
+    "mongodb",
+    "doctor-module",
+    "medicare"
+  ],
+  "author": "Ahmed",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  }
+}
