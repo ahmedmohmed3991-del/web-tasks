@@ -56,6 +56,10 @@ const doctorSchema = new mongoose.Schema(
     available: {
       type: Boolean,
       default: true
+    },
+    profileImage: {
+      type: String,
+      default: null
     }
   },
   {

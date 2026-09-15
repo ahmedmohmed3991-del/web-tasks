@@ -14,6 +14,13 @@ async function createDoctor(req, res) {
   try {
     const { name, email, specialization, department, licenseNumber, consultationFee, available } = req.body;
 
+    let profileImage = null;
+    if (req.file) {
+      profileImage = `/uploads/doctors/${req.file.filename}`;
+    } else if (req.body.profileImage) {
+      profileImage = req.body.profileImage;
+    }
+
     const doctor = new Doctor({
       name,
       email,
@@ -21,7 +28,8 @@ async function createDoctor(req, res) {
       department,
       licenseNumber,
       consultationFee,
-      available: available !== undefined ? available : true
+      available: available !== undefined ? available : true,
+      profileImage
     });
 
     const savedDoctor = await doctor.save();
@@ -125,9 +133,14 @@ async function updateDoctor(req, res) {
       });
     }
 
+    const updateData = { ...req.body };
+    if (req.file) {
+      updateData.profileImage = `/uploads/doctors/${req.file.filename}`;
+    }
+
     const updatedDoctor = await Doctor.findByIdAndUpdate(
       id,
-      { $set: req.body },
+      { $set: updateData },
       { new: true, runValidators: true }
     );
 
@@ -160,6 +173,63 @@ async function updateDoctor(req, res) {
       });
     }
 
+    return res.status(500).json({
+      success: false,
+      error: `Server Error: ${error.message}`
+    });
+  }
+}
+
+/**
+ * POST /doctors/:id/upload
+ * Upload or update Doctor profile photo
+ */
+async function uploadDoctorImage(req, res) {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid ID format: '${id}' is not a valid MongoDB ObjectId.`
+      });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        error: "No image file provided. Please attach an image file using form field 'profileImage' or 'image'."
+      });
+    }
+
+    const imagePath = `/uploads/doctors/${req.file.filename}`;
+
+    const updatedDoctor = await Doctor.findByIdAndUpdate(
+      id,
+      { $set: { profileImage: imagePath } },
+      { new: true, runValidators: true }
+    );
+
+    if (!doctorExist(updatedDoctor)) {
+      return res.status(404).json({
+        success: false,
+        error: `Doctor with ID '${id}' not found.`
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Doctor profile photo uploaded and linked successfully",
+      data: updatedDoctor,
+      file: {
+        filename: req.file.filename,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+        url: imagePath
+      }
+    });
+  } catch (error) {
     return res.status(500).json({
       success: false,
       error: `Server Error: ${error.message}`
@@ -216,5 +286,6 @@ module.exports = {
   getAllDoctors,
   getDoctorById,
   updateDoctor,
-  deleteDoctor
+  deleteDoctor,
+  uploadDoctorImage
 };

@@ -10,14 +10,19 @@ const {
   getAllDoctors,
   getDoctorById,
   updateDoctor,
-  deleteDoctor
+  deleteDoctor,
+  uploadDoctorImage
 } = require("../controllers/doctor.controller");
+const { handleImageUpload } = require("../middleware/upload");
 
 // Route mappings
-router.post("/", createDoctor);
+router.post("/", handleImageUpload, createDoctor);
 router.get("/", getAllDoctors);
 router.get("/:id", getDoctorById);
-router.patch("/:id", updateDoctor);
+router.patch("/:id", handleImageUpload, updateDoctor);
 router.delete("/:id", deleteDoctor);
+
+// Dedicated image upload route
+router.post("/:id/upload", handleImageUpload, uploadDoctorImage);
 
 module.exports = router;
