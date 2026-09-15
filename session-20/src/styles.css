@@ -1,0 +1,63 @@
+/* Global Styles for Session 20 Team Manager */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --bg-card-hover: #273549;
+  --border-color: #334155;
+  --border-subtle: #243042;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+  
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-soft: rgba(59, 130, 246, 0.12);
+  
+  --color-available: #10b981;
+  --color-available-hover: #059669;
+  --color-available-soft: rgba(16, 185, 129, 0.15);
+  
+  --color-unavailable: #ef4444;
+  --color-unavailable-hover: #dc2626;
+  --color-unavailable-soft: rgba(239, 68, 68, 0.15);
+  
+  --color-dept-dev: #8b5cf6;
+  --color-dept-dev-soft: rgba(139, 92, 246, 0.15);
+  --color-dept-mkt: #f59e0b;
+  --color-dept-mkt-soft: rgba(245, 158, 11, 0.15);
+  --color-dept-des: #ec4899;
+  --color-dept-des-soft: rgba(236, 72, 153, 0.15);
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select {
+  font-family: inherit;
+}
